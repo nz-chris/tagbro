@@ -18,13 +18,19 @@ bot.on("message", message => {
     let regex = new RegExp("^" + prefix);
     if (message.content === prefix + "server count" || message.content === prefix + "sc" ) {
         giveServerCounts(message);
-    } else if (new RegExp(regex.source.concat("echo ")).test(message.content)) {
-        echo(message);
+    }
+    let commandWithArgs = "echo";
+    if (new RegExp(regex.source.concat(commandWithArgs + " .+")).test(message.content)) {
+        let commandStart = prefix + commandWithArgs + " ";
+        let argsString = message.content.slice(message.content.indexOf(commandStart) + commandStart.length);
+        echo(message, argsString);
     }
 });
 
 function echo(message) {
-    message.channel.send("Author: " + message.author + "\nID: " + message.author.id + "\nUsername: " + message.author.username + "\nTag: " + message.author.tag);
+    if (message.author.tag === "Zagd#6682") {
+        message.channel.send("Author: " + message.author + "\nID: " + message.author.id + "\nUsername: " + message.author.username + "\nTag: " + message.author.tag);
+    }
 }
 
 const servers = [
