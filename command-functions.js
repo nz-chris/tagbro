@@ -1,6 +1,6 @@
 const tagbro = require("./tagbro.js");
 const log = tagbro.log;
-console.log("pre: " + log);
+console.log("pre: " + tagbro.log);
 const utils = require("./utils.js");
 const config = require("./config.json");
 const prefix = config.prefix;
