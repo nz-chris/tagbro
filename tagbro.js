@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
-const axios = require("axios");
+const commands = require("./command-functions.js");
+const utils = require("./utils.js");
 const config = require("./config.json");
 const prefix = config.prefix;
 
@@ -15,23 +16,19 @@ bot.on("ready", function () {
 });
 
 bot.on("message", message => {
-    let regex = new RegExp("^" + prefix);
+    if (message.content.indexOf(config.prefix) !== 0) return;
+    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
+    const argsString = message.slice((prefix + command + " ").length);
+    const regex = new RegExp("^" + prefix);
+
     if (message.content === prefix + "server count" || message.content === prefix + "sc" ) {
-        giveServerCounts(message);
+        commands.giveServerCounts(message, command);
     }
-    let commandWithArgs = "echo";
-    if (new RegExp(regex.source.concat(commandWithArgs + " .+")).test(message.content)) {
-        let commandStart = prefix + commandWithArgs + " ";
-        let argsString = message.content.slice(message.content.indexOf(commandStart) + commandStart.length);
-        echo(message, argsString);
+    if (new RegExp(regex.source.concat("echo" + " .+")).test(message.content)) {
+        commands.echo(message, command, argsString);
     }
 });
-
-function echo(message, argsString) {
-    if (message.author.tag === "Zagd#6682") {
-        message.channel.send(argsString);
-    }
-}
 
 const servers = [
     "Diameter",
@@ -54,42 +51,6 @@ const serverAddresses = {
     "Orbit": "http://tagpro-orbit.koalabeast.com/",
     "Chord": "http://tagpro-chord.koalabeast.com/"
 };
-
-function giveServerCounts(message) {
-    log("Responding to " + prefix + "server count.");
-    let serverCounts = "";
-    let count = 0;  // Amount of completed axios gets.
-    for (let i = 0; i < servers.length; i++) {
-        let server = servers[i];
-        let address = serverAddresses[server];
-        axios.get(address + "stats").then(function (response) {
-            count++;
-            let data = response.data;
-            serverCounts = serverCounts.concat(
-                pad(" ".repeat(10), server + ":", false) +
-                pad("00", data.players, true) +
-                " players and " +
-                pad("00", data.games, true) +
-                " games.\n"
-            );
-            if (count === servers.length) {
-                message.channel.send("```" + serverCounts + "```");
-            }
-        }).catch(function (error) {
-            log(error);
-        });
-    }
-}
-
-function pad(pad, str, padLeft) {
-    if (typeof str === 'undefined')
-        return pad;
-    if (padLeft) {
-        return (pad + str).slice(-pad.length);
-    } else {
-        return (str + pad).substring(0, pad.length);
-    }
-}
 
 function log(message) {
     console.log(message);
