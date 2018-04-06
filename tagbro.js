@@ -15,9 +15,10 @@ bot.on("ready", function () {
 });
 
 bot.on("message", message => {
+    let regex = new RegExp("^" + prefix);
     if (message.content === prefix + "server count" || message.content === prefix + "sc" ) {
         giveServerCounts(message);
-    } else if (message.content === prefix + "echo" || message.content === prefix + "e" ) {
+    } else if (new RegExp(regex.source.concat("echo ")).test(message.content)) {
         echo(message);
     }
 });
