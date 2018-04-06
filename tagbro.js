@@ -27,9 +27,9 @@ bot.on("message", message => {
     }
 });
 
-function echo(message) {
+function echo(message, argsString) {
     if (message.author.tag === "Zagd#6682") {
-        message.channel.send("Author: " + message.author + "\nID: " + message.author.id + "\nUsername: " + message.author.username + "\nTag: " + message.author.tag);
+        message.channel.send(argsString);
     }
 }
 
