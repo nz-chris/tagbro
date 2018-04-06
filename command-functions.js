@@ -1,5 +1,6 @@
 const tagbro = require("./tagbro.js");
 const utils = require("./utils.js");
+const config = require("./config.json");
 const log = tagbro.log;
 const prefix = config.prefix;
 
