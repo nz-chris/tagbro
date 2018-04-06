@@ -16,7 +16,7 @@ exports.echo = function(message, command, argsString) {
 
 exports.giveServerCounts = function(message, command) {
     console.log(tagbro.log);
-    log("Responding to " + prefix + command + ".");
+    tagbro.log("Responding to " + prefix + command + ".");
     let serverCounts = "";
     let count = 0;  // Amount of completed axios gets.
     for (let i = 0; i < servers.length; i++) {
