@@ -1,29 +1,9 @@
-const Discord = require("discord.js");
 const axios = require("axios");
 const config = require("./config.json");
 const prefix = config.prefix;
 
-const bot = new Discord.Client({
-    disableEveryone: true
-});
-
-bot.destroy();
-bot.login(process.env.BOT_TOKEN);
-
-bot.on("ready", function () {
-    log("Bot connected.");
-});
-
-bot.on("message", message => {
-    if (message.content === prefix + "server count" || message.content === prefix + "sc" ) {
-        giveServerCounts(message);
-    } else if (message.content === prefix + "echo" || message.content === prefix + "e" ) {
-        echo(message);
-    }
-});
-
-function echo(message) {
-    message.channel.send("Author: " + message.author + "\nID: " + message.author.id + "\nUsername: " + message.author.username + "\nTag: " + message.author.tag);
+function main() {
+    giveServerCounts()
 }
 
 const servers = [
@@ -48,7 +28,7 @@ const serverAddresses = {
     "Chord": "http://tagpro-chord.koalabeast.com/"
 };
 
-function giveServerCounts(message) {
+function giveServerCounts() {
     log("Responding to " + prefix + "server count.");
     let serverCounts = "";
     let count = 0;  // Amount of completed axios gets.
@@ -66,10 +46,10 @@ function giveServerCounts(message) {
                 " games.\n"
             );
             if (count === servers.length) {
-                message.channel.send("```" + serverCounts + "```");
+                log(serverCounts);
             }
         }).catch(function (error) {
-            log(error);
+            console.log(error);
         });
     }
 }
@@ -87,3 +67,5 @@ function pad(pad, str, padLeft) {
 function log(message) {
     console.log(message);
 }
+
+main();
