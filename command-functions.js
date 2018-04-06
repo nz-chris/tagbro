@@ -1,5 +1,5 @@
 const tagbro = require("./tagbro.js");
-const {log} = require('./first_file')
+const {log} = require("./tagbro.js");
 const utils = require("./utils.js");
 const config = require("./config.json");
 const prefix = config.prefix;
