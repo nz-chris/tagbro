@@ -6,4 +6,8 @@ exports.pad = function(pad, str, padLeft) {
     } else {
         return (str + pad).substring(0, pad.length);
     }
-}
+};
+
+exports.log = function(message) {
+    console.log(message);
+};
