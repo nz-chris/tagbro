@@ -27,7 +27,7 @@ bot.on("message", message => {
     log("Responding to " + prefix + command + ".");
 
     if (message.content === prefix + "server count" || message.content === prefix + "sc" ) {
-        log("Responding to " + prefix + command + ".");
+        commands.giveServerCounts(message, command);
     }
     if (new RegExp(regex.source.concat("echo" + " .+")).test(message.content)) {
         commands.echo(message, command, argsString);
