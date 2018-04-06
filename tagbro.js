@@ -57,3 +57,5 @@ function log(message) {
 }
 
 exports.log = log;
+exports.servers = servers;
+exports.serverAddresses = serverAddresses;

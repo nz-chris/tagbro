@@ -1,5 +1,5 @@
 const tagbro = require("./tagbro.js");
-console.log(tagbro.log);
+const {log} = require('./first_file')
 const utils = require("./utils.js");
 const config = require("./config.json");
 const prefix = config.prefix;
@@ -15,8 +15,7 @@ exports.echo = function(message, command, argsString) {
 };
 
 exports.giveServerCounts = function(message, command) {
-    console.log(tagbro.log);
-    tagbro.log("Responding to " + prefix + command + ".");
+    log("Responding to " + prefix + command + ".");
     let serverCounts = "";
     let count = 0;  // Amount of completed axios gets.
     for (let i = 0; i < servers.length; i++) {
