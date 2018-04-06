@@ -1,4 +1,4 @@
-function pad(pad, str, padLeft) {
+exports.pad = function(pad, str, padLeft) {
     if (typeof str === 'undefined')
         return pad;
     if (padLeft) {

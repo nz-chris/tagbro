@@ -1,12 +1,12 @@
 const tagbro = require("./tagbro.js");
+const log = tagbro.log;
 const utils = require("./utils.js");
 const config = require("./config.json");
-const log = tagbro.log;
 const prefix = config.prefix;
 
 const axios = require("axios");
 
-function echo(message, command, argsString) {
+exports.echo = function(message, command, argsString) {
     log("Responding to " + prefix + command + ".");
     if (message.author.tag === "Zagd#6682") {
         message.delete().catch(O_o=>{});
@@ -14,7 +14,7 @@ function echo(message, command, argsString) {
     }
 }
 
-function giveServerCounts(message, command) {
+exports.giveServerCounts = function(message, command) {
     log("Responding to " + prefix + command + ".");
     let serverCounts = "";
     let count = 0;  // Amount of completed axios gets.
