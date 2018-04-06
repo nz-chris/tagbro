@@ -1,5 +1,5 @@
 const tagbro = require("./tagbro.js");
-const log = tagbro.log;
+const log = tagbro.exports.log;
 const utils = require("./utils.js");
 const config = require("./config.json");
 const prefix = config.prefix;
@@ -12,7 +12,7 @@ exports.echo = function(message, command, argsString) {
         message.delete().catch(O_o=>{});
         message.channel.send(argsString);
     }
-}
+};
 
 exports.giveServerCounts = function(message, command) {
     log("Responding to " + prefix + command + ".");
@@ -38,4 +38,4 @@ exports.giveServerCounts = function(message, command) {
             log(error);
         });
     }
-}
+};
