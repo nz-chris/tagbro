@@ -1,5 +1,6 @@
 const axios = require("axios");
 
+const constants = require("./constants.js");
 const utils = require("./utils.js");
 const {log} = require("./utils.js");
 
@@ -16,9 +17,9 @@ exports.echo = function(message, command, argsString) {
 exports.giveServerCounts = function(message, command) {
     let serverCounts = "";
     let count = 0;  // Amount of completed axios gets.
-    for (let i = 0; i < servers.length; i++) {
-        let server = tagbro.servers[i];
-        let address = tagbro.serverAddresses[server];
+    for (let i = 0; i < constants.servers.length; i++) {
+        let server = constants.servers[i];
+        let address = constants.serverAddresses[server];
         axios.get(address + "stats").then(function (response) {
             count++;
             let data = response.data;
@@ -29,7 +30,7 @@ exports.giveServerCounts = function(message, command) {
                 utils.pad("00", data.games, true) +
                 " games.\n"
             );
-            if (count === servers.length) {
+            if (count === constants.servers.length) {
                 message.channel.send("```" + serverCounts + "```");
             }
         }).catch(function (error) {
