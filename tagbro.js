@@ -75,7 +75,7 @@ function updateServerCountsMessage(serverCountsMessage) {
                 constants.serverAddresses[sortedServerCounts[i][0]] + "\n"
             );
         }
-        newServerCountsMessage = newServerCountsMessage.concat("\n**updated every 2 minutes**");
+        newServerCountsMessage = newServerCountsMessage.concat("\n**updated every 2 minutes. use `..sc` to manually check.**");
         serverCountsMessage.edit(newServerCountsMessage);
     }).catch(console.error);
 }
