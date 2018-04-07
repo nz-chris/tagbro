@@ -65,6 +65,7 @@ function updateServerCountsMessage(serverCountsMessage) {
     commands.getSortedServerCounts().then(response => {
         let newServerCountsMessage = "Server counts:\n\n";
         let sortedServerCounts = response;
+        log(sortedServerCounts);
         log("IMPORTANT\n" + sortedServerCounts.slice(0, 1));
         newServerCountsMessage = newServerCountsMessage.concat(
             "`" + commands.padServerStats(sortedServerCounts.slice(0, 1)) + "` " +
