@@ -76,6 +76,6 @@ function updateServerCountsMessage(serverCountsMessage) {
             );
         }
         newServerCountsMessage = newServerCountsMessage.concat("\n**updated every 2 minutes**");
-        log(newServerCountsMessage);
+        serverCountsMessage.edit(newServerCountsMessage);
     }).catch(console.error);
 }
