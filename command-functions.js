@@ -14,17 +14,17 @@ exports.echo = function(message, argsString) {
     }
 };
 
-exports.giveServerCounts = function(message) {
-    let serverCounts = getServerCounts();
+exports.giveServerCounts = async function(message) {
+    let serverCounts = await getServerCounts();
     let serverCountsMessage = getServerCountsMessage(serverCounts);
     message.channel.send("```" + serverCountsMessage + "```");
 };
 
-exports.getSortedServerCounts = function() {
-    return getSortedServerCounts(getServerCounts());
+exports.getSortedServerCounts = async function() {
+    return getSortedServerCounts(await getServerCounts());
 };
 
-function getServerCounts() {
+async function getServerCounts() {
     let serverCounts = {};
     let count = 0;  // Amount of completed axios gets.
     for (let i = 0; i < constants.servers.length; i++) {
