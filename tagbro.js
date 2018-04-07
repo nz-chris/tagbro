@@ -38,7 +38,6 @@ bot.on("ready", function () {
     let minutes = 2, the_interval = minutes * 60 * 1000;
     setInterval(function() {
         if (serverCountsMessage !== undefined) {
-            log("Updating server counts message.");
             updateServerCountsMessage(serverCountsMessage);
         }
     }, the_interval);
@@ -62,20 +61,21 @@ bot.on("message", message => {
 });
 
 function updateServerCountsMessage(serverCountsMessage) {
+    log("Updating server counts message.");
     commands.getSortedServerCounts().then(response => {
         let newServerCountsMessage = "Server counts:\n\n";
         let sortedServerCounts = response;
         newServerCountsMessage = newServerCountsMessage.concat(
-            "`" + commands.padServerStats(sortedServerCounts[0]) + "` " +
-            constants.serverAddresses[sortedServerCounts[0][0]] + "\n\n*Other servers:*\n"
+            "`" + commands.padServerStats(sortedServerCounts[0]) + "` <" +
+            constants.serverAddresses[sortedServerCounts[0][0]] + ">\n\n*Other servers:*\n"
         );
         for (let i = 1; i < sortedServerCounts.slice(1).length; i++) {
             newServerCountsMessage = newServerCountsMessage.concat(
-                "`" + commands.padServerStats(sortedServerCounts[i]) + "` " +
-                constants.serverAddresses[sortedServerCounts[i][0]] + "\n"
+                "`" + commands.padServerStats(sortedServerCounts[i]) + "` <" +
+                constants.serverAddresses[sortedServerCounts[i][0]] + ">\n"
             );
         }
-        newServerCountsMessage = newServerCountsMessage.concat("\n**updated every 2 minutes. use `..sc` to manually check.**");
+        newServerCountsMessage = newServerCountsMessage.concat("\n*updated every 2 minutes. use `..sc` to manually check.*");
         serverCountsMessage.edit(newServerCountsMessage);
     }).catch(console.error);
 }
