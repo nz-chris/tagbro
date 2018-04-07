@@ -14,32 +14,23 @@ const bot = new Discord.Client({
 bot.destroy();
 bot.login(process.env.BOT_TOKEN);
 
+let serverCountsMessage;
+
 bot.on("ready", function () {
     log("Bot connected.");
     log("Connected to Guilds: " + bot.guilds.array());
     bot.user.setActivity("out for you.", {type: "WATCHING"});
 
-    // Find tagbro-bot channel in OLTP discord.
+    // Fetch the server counts message in OLTP #tagbro-bot.
     if (bot.guilds.has(constants.oltpDiscId)) {
         let oltpGuild = bot.guilds.get(constants.oltpDiscId);
         if (oltpGuild.channels.has(constants.tagbrobotChannelId)) {
             let tagbroBotChannel = oltpGuild.channels.get(constants.tagbrobotChannelId);
-            tagbroBotChannel.fetchMessages({ limit: 25 })
-                .then(messages => {
-                    for (let i = 0; i < messages.size; i++) {
-                        let message = messages.array()[i];
-                        if (message.author.id === bot.user.id) {
-                            if (message.content.indexOf("Server counts:") === 0) {
-                                log(message.content);
-                                log(message.id);
-                            }
-                        }
-                    }
-                })
+            tagbroBotChannel.fetchMessage(constants.serverCountsMessageId)
+                .then(message => serverCountsMessage = message)
                 .catch(console.error);
         }
     }
-
 });
 
 bot.on("message", message => {
@@ -51,10 +42,10 @@ bot.on("message", message => {
     log("Responding to " + prefix + command + ".");
 
     if (message.content === prefix + "server count" || message.content === prefix + "sc" ) {
-        commands.giveServerCounts(message, command);
+        commands.giveServerCounts(message);
     }
     if (new RegExp(regex.source.concat("echo" + " .+")).test(message.content)) {
-        commands.echo(message, command, argsString);
+        commands.echo(message, argsString);
     }
     if (message.content === prefix + "sinfo") {  // Temp.
         let guild = message.channel.guild;
