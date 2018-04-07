@@ -30,9 +30,10 @@ bot.on("ready", function () {
             tagbroBotChannel.fetchMessages({ limit: 25 })
                 .then(messages => {
                     log("found messages! bot.user.id = " + bot.user.id);
+                    log(messages.array());
                     for (let message in messages) {
-                        log("got a message from id: " + message.author.id);
                         if (messages.hasOwnProperty(message)) {
+                            log("got a message from id: " + message.author.id);
                             if (message.author.id === bot.user.id) {
                                 log(message);
                                 log(message.id);
