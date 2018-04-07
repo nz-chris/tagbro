@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 
 const commands = require("./command-functions.js");
 const {log} = require("./utils.js");
+const constants = require("./constants.js");
 
 const config = require("./config.json");
 const prefix = config.prefix;
@@ -17,6 +18,24 @@ bot.on("ready", function () {
     log("Bot connected.");
     bot.user.setActivity("out for you.", {type: "WATCHING"});
 
+    // Find tagbro-bot channel in OLTP discord.
+    if (bot.guilds.hasOwnProperty(constants.oltpDiscId)) {
+        let oltpGuild = bot.guilds.get(constants.oltpDiscId);
+        if (oltpGuild.channels.hasOwnProperty(constant.tagbrobotChannelId)) {
+            let tagbroBotChannel = oltpGuild.channels.get(constants.tagbrobotChannelId);
+            tagbroBotChannel.fetchMessages({ limit: 25 })
+                .then(messages => {
+                    for (let message in messages) {
+                        if (messages.hasOwnProperty(message)) {
+                            if (message.author.id === bot.user.id) {
+                                log(message);
+                            }
+                        }
+                    }
+                })
+                .catch(console.error);
+        }
+    }
 
 });
 

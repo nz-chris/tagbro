@@ -19,3 +19,7 @@ exports.serverAddresses = {
     "Orbit": "http://tagpro-orbit.koalabeast.com/",
     "Chord": "http://tagpro-chord.koalabeast.com/"
 };
+
+exports.oltpDiscId = "394459353060605953";
+
+exports.tagbrobotChannelId = "431742487695065108";
