@@ -16,6 +16,8 @@ bot.login(process.env.BOT_TOKEN);
 bot.on("ready", function () {
     log("Bot connected.");
     bot.user.setActivity("out for you.", {type: "WATCHING"});
+
+
 });
 
 bot.on("message", message => {
@@ -31,5 +33,8 @@ bot.on("message", message => {
     }
     if (new RegExp(regex.source.concat("echo" + " .+")).test(message.content)) {
         commands.echo(message, command, argsString);
+    }
+    if (message.content === prefix + "sinfo") {  // Temp.
+        message.channel.send("Guild: " + message.channel.guild);
     }
 });
