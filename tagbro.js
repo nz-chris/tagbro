@@ -20,23 +20,19 @@ bot.on("ready", function () {
     bot.user.setActivity("out for you.", {type: "WATCHING"});
 
     // Find tagbro-bot channel in OLTP discord.
-    log("Guild IDs: " + bot.guilds.keyArray() + ". Looking for: " + constants.oltpDiscId + ".");
     if (bot.guilds.has(constants.oltpDiscId)) {
-        log("found oltp discord");
         let oltpGuild = bot.guilds.get(constants.oltpDiscId);
         if (oltpGuild.channels.has(constants.tagbrobotChannelId)) {
-            log("found tagbro-bot channel");
             let tagbroBotChannel = oltpGuild.channels.get(constants.tagbrobotChannelId);
             tagbroBotChannel.fetchMessages({ limit: 25 })
                 .then(messages => {
-                    log("found " + messages.size + " messages. bot.user.id = " + bot.user.id);
                     for (let i = 0; i < messages.size; i++) {
-                        log("bing");
                         let message = messages.array()[i];
-                        log("got a message from id: " + message.author.id);
                         if (message.author.id === bot.user.id) {
-                            log(message.content);
-                            log(message.id);
+                            if (message.content.indexOf("Server counts:") === 0) {
+                                log(message.content);
+                                log(message.id);
+                            }
                         }
                     }
                 })
