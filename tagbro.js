@@ -21,10 +21,10 @@ bot.on("ready", function () {
 
     // Find tagbro-bot channel in OLTP discord.
     log("Guild IDs: " + bot.guilds.keyArray() + ". Looking for: " + constants.oltpDiscId + ".");
-    if (bot.guilds.hasOwnProperty(constants.oltpDiscId)) {
+    if (bot.guilds.has(constants.oltpDiscId)) {
         log("found oltp discord");
         let oltpGuild = bot.guilds.get(constants.oltpDiscId);
-        if (oltpGuild.channels.hasOwnProperty(constant.tagbrobotChannelId)) {
+        if (oltpGuild.channels.has(constant.tagbrobotChannelId)) {
             log("found tagbro-bot channel");
             let tagbroBotChannel = oltpGuild.channels.get(constants.tagbrobotChannelId);
             tagbroBotChannel.fetchMessages({ limit: 25 })
@@ -34,6 +34,7 @@ bot.on("ready", function () {
                         if (messages.hasOwnProperty(message)) {
                             if (message.author.id === bot.user.id) {
                                 log(message);
+                                log(message.id);
                             }
                         }
                     }
