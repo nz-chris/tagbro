@@ -29,7 +29,7 @@ bot.on("ready", function () {
             let tagbroBotChannel = oltpGuild.channels.get(constants.tagbrobotChannelId);
             tagbroBotChannel.fetchMessages({ limit: 25 })
                 .then(messages => {
-                    log("found messages! bot.user.id = " + bot.user.id);
+                    log("found ${messages.size} messages. bot.user.id = " + bot.user.id);
                     for (let i = 0; i < messages.entries().length; i++) {
                         let messageId = messages.entries.get(i)[0];
                         let message = messages.entries.get(i)[1];
