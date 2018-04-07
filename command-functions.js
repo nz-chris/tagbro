@@ -41,16 +41,7 @@ exports.getSortedServerCounts = getSortedServerCounts;
 function getServerCountsMessage(sortedServerCounts) {
     let serverCountsMessage = "";
     for (let i = 0; i < sortedServerCounts.length; i++) {
-        let server = sortedServerCounts[i][0];
-        let serverPlayers = sortedServerCounts[i][1];
-        let serverGames = sortedServerCounts[i][2];
-        serverCountsMessage = serverCountsMessage.concat(
-            utils.pad(" ".repeat(10), server + ":", false) +
-            utils.pad("00", serverPlayers, true) +
-            " players and " +
-            utils.pad("00", serverGames, true) +
-            " games.\n"
-        );
+        serverCountsMessage = serverCountsMessage.concat(padServerStats(sortedServerCounts[i]) + "\n");
     }
     return serverCountsMessage;
 }
@@ -65,3 +56,15 @@ function sortServerCounts(serverCounts) {
     }
     return sortedServerCounts;
 }
+
+function padServerStats(serverStats) {
+    let server = serverStats[0];
+    let serverPlayers = serverStats[1];
+    let serverGames = serverStats[2];
+    return utils.pad(" ".repeat(10), server + ":", false) +
+        utils.pad("00", serverPlayers, true) +
+        " players and " +
+        utils.pad("00", serverGames, true) +
+        " games.\n";
+}
+exports.padServerStats = padServerStats;

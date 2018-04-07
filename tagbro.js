@@ -66,15 +66,16 @@ function updateServerCountsMessage(serverCountsMessage) {
         let newServerCountsMessage = "Server counts:\n\n";
         let sortedServerCounts = response;
         newServerCountsMessage = newServerCountsMessage.concat(
-            "`" + commands.getServerCountsMessage(sortedServerCounts.slice(0, 1)) + "` " +
+            "`" + commands.padServerStats(sortedServerCounts.slice(0, 1)) + "` " +
             constants.serverAddresses[sortedServerCounts[0][0]] + "\n\n*Other servers:*\n"
         );
         for (let i = 0; i < sortedServerCounts.slice(1).length; i++) {
             newServerCountsMessage = newServerCountsMessage.concat(
-                "`" + commands.getServerCountsMessage(sortedServerCounts.slice(i, i + 1)) + "` " +
+                "`" + commands.padServerStats(sortedServerCounts.slice(i, i + 1)) + "` " +
                 constants.serverAddresses[sortedServerCounts[0][0]] + "\n"
             );
         }
+        newServerCountsMessage = newServerCountsMessage.concat("\n**updated every 2 minutes**");
         log(newServerCountsMessage);
     }).catch(console.error);
 }
