@@ -27,6 +27,7 @@ async function getSortedServerCounts() {
         let server = constants.servers[i];
         let address = constants.serverAddresses[server];
         axios.get(address + "stats").then(response => {
+            log("got!");
             count++;
             let data = response.data;
             serverCounts[server] = [data.players, data.games];
