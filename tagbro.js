@@ -31,6 +31,7 @@ bot.on("ready", function () {
                 .then(messages => {
                     log("found " + messages.size + " messages. bot.user.id = " + bot.user.id);
                     for (let i = 0; i < messages.entries().length; i++) {
+                        log("bing");
                         let messageId = messages.entries.get(i)[0];
                         let message = messages.entries.get(i)[1];
                         log("got a message from id: " + message.author.id);
