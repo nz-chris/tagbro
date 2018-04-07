@@ -15,39 +15,31 @@ exports.echo = function(message, argsString) {
 };
 
 exports.giveServerCounts = async function(message) {
-    let serverCounts = await getServerCounts();
-    let serverCountsMessage = getServerCountsMessage(serverCounts);
+    let sortedServerCounts = await getSortedServerCounts();
+    let serverCountsMessage = getServerCountsMessage(sortedServerCounts);
     message.channel.send("```" + serverCountsMessage + "```");
 };
 
-exports.getSortedServerCounts = async function() {
-    log("in getSortedServerCounts");
-    return getSortedServerCounts(await getServerCounts());
-};
-
-async function getServerCounts() {
+async function getSortedServerCounts() {
     let serverCounts = {};
     let count = 0;  // Amount of completed axios gets.
     for (let i = 0; i < constants.servers.length; i++) {
         let server = constants.servers[i];
         let address = constants.serverAddresses[server];
-        axios.get(address + "stats").then(function (response) {
+        axios.get(address + "stats").then(response => {
             count++;
             let data = response.data;
             serverCounts[server] = [data.players, data.games];
             if (count === constants.servers.length) {
-                return serverCounts;
+                return sortServerCounts(serverCounts);
             }
-        }).catch(function (error) {
-            log(error);
-        });
+        }).catch(console.error);
     }
 }
+exports.getSortedServerCounts = getSortedServerCounts;
 
-function getServerCountsMessage(serverCounts) {
-    log("in getServerCountsMessage");
+function getServerCountsMessage(sortedServerCounts) {
     let serverCountsMessage = "";
-    let sortedServerCounts = getSortedServerCounts(serverCounts);
     for (let i = 0; i < sortedServerCounts.length; i++) {
         let server = sortedServerCounts[i][0];
         let serverPlayers = sortedServerCounts[i][1];
@@ -63,7 +55,7 @@ function getServerCountsMessage(serverCounts) {
     return serverCountsMessage;
 }
 
-function getSortedServerCounts(serverCounts) {
+function sortServerCounts(serverCounts) {
     let sortedServerCounts = [];
     for (let i = 0; i < constants.servers.length; i++) {
         let server = constants.servers[i];
