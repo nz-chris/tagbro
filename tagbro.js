@@ -39,4 +39,8 @@ bot.on("message", message => {
         message.channel.send("Guild: " + guild + ". ID: " + guild.id + ".\n" +
             "Channels: " + guild.channels + ".");
     }
+    if (message.content === prefix + "cinfo") {  // Temp.
+        let channel = message.channel;
+        message.channel.send("Name: " + channel.name + ". ID: " + channel.id + ".");
+    }
 });
