@@ -35,6 +35,8 @@ bot.on("message", message => {
         commands.echo(message, command, argsString);
     }
     if (message.content === prefix + "sinfo") {  // Temp.
-        message.channel.send("Guild: " + message.channel.guild);
+        let guild = message.channel.guild;
+        message.channel.send("Guild: " + guild + ". ID: " + guild.id + ".\n" +
+            "Channels: " + guild.channels + ".");
     }
 });
