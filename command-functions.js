@@ -25,7 +25,7 @@ exports.giveServerCounts = function(message) {
             let data = response.data;
             serverCounts[server] = [data.players, data.games];
             if (count === constants.servers.length) {
-                createServerCountsMessage(serverCounts);
+                createServerCountsMessage(serverCounts, message);
             }
         }).catch(function (error) {
             log(error);
@@ -33,8 +33,20 @@ exports.giveServerCounts = function(message) {
     }
 };
 
-function createServerCountsMessage(serverCounts) {
-    log(serverCounts);
+function createServerCountsMessage(serverCounts, message) {
+    let serverCountsMessage = "";
+    for (let i = 0; i < constants.servers.length; i++) {
+        let server = constants.servers[i];
+        let serverData = serverCounts[server];
+        serverCountsMessage = serverCountsMessage.concat(
+            utils.pad(" ".repeat(10), server + ":", false) +
+            utils.pad("00", serverData[0], true) +
+            " players and " +
+            utils.pad("00", serverData[1], true) +
+            " games.\n"
+        );
+    }
+    message.channel.send("```" + serverCountsMessage + "```");
 }
 
 /* string build
