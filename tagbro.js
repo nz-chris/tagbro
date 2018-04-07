@@ -20,11 +20,14 @@ bot.on("ready", function () {
 
     // Find tagbro-bot channel in OLTP discord.
     if (bot.guilds.hasOwnProperty(constants.oltpDiscId)) {
+        log("found oltp discord");
         let oltpGuild = bot.guilds.get(constants.oltpDiscId);
         if (oltpGuild.channels.hasOwnProperty(constant.tagbrobotChannelId)) {
+            log("found tagbro-bot channel");
             let tagbroBotChannel = oltpGuild.channels.get(constants.tagbrobotChannelId);
             tagbroBotChannel.fetchMessages({ limit: 25 })
                 .then(messages => {
+                    log("found messages!");
                     for (let message in messages) {
                         if (messages.hasOwnProperty(message)) {
                             if (message.author.id === bot.user.id) {
