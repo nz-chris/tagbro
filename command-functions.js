@@ -23,7 +23,7 @@ exports.giveServerCounts = function(message) {
         axios.get(address + "stats").then(function (response) {
             count++;
             let data = response.data;
-            serverCounts.[server] = [data.players, data.games];
+            serverCounts[server] = [data.players, data.games];
             if (count === constants.servers.length) {
                 createServerCountsMessage(serverCounts);
             }
