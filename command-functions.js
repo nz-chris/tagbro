@@ -63,6 +63,6 @@ function padServerStats(serverStats) {
     let serverGames = serverStats[2];
     return utils.pad(" ".repeat(10), server + ":", false) +
         utils.pad("00", serverPlayers, true) + " players and " +
-        utils.pad("00", serverGames, true) + " games.";
+        utils.pad("00", serverGames, true) + " games";
 }
 exports.padServerStats = padServerStats;
