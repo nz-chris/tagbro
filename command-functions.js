@@ -41,11 +41,13 @@ exports.getSortedServerCounts = getSortedServerCounts;
 function getServerCountsMessage(sortedServerCounts) {
     let serverCountsMessage = "";
     for (let i = 0; i < sortedServerCounts.length; i++) {
-        serverCountsMessage = serverCountsMessage.concat(padServerStats(sortedServerCounts[i]) + "\n");
+        serverCountsMessage = serverCountsMessage.concat(
+            "`" + padServerStats(sortedServerCounts[i]) + "` <" +
+            constants.serverAddresses[sortedServerCounts[i][0]] + ">\n"
+        );
     }
     return serverCountsMessage;
 }
-exports.getServerCountsMessage = getServerCountsMessage;
 
 function sortServerCounts(serverCounts) {
     let sortedServerCounts = [];
