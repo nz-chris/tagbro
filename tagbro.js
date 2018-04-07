@@ -59,19 +59,22 @@ bot.on("message", message => {
     if (new RegExp(regex.source.concat("echo" + " .+")).test(message.content)) {
         commands.echo(message, argsString);
     }
-    if (message.content === prefix + "sinfo") {  // Temp.
-        let guild = message.channel.guild;
-        message.channel.send("Guild: " + guild + ". ID: " + guild.id + ".\n" +
-            "Channels: " + guild.channels + ".");
-    }
-    if (message.content === prefix + "cinfo") {  // Temp.
-        let channel = message.channel;
-        message.channel.send("Name: " + channel.name + ". ID: " + channel.id + ".");
-    }
 });
 
 function updateServerCountsMessage(serverCountsMessage) {
-    commands.getSortedServerCounts().then(sortedServerCounts => {
-        log(sortedServerCounts);
+    commands.getSortedServerCounts().then(response => {
+        let newServerCountsMessage = "Server counts:\n\n";
+        let sortedServerCounts = response;
+        newServerCountsMessage = newServerCountsMessage.concat(
+            "`" + commands.getServerCountsMessage(sortedServerCounts.slice(0, 1)) + "` " +
+            constants.serverAddresses[sortedServerCounts[0][0]] + "\n\n*Other servers:*\n"
+        );
+        for (let i = 0; i < sortedServerCounts.slice(1).length; i++) {
+            newServerCountsMessage = newServerCountsMessage.concat(
+                "`" + commands.getServerCountsMessage(sortedServerCounts.slice(i, i + 1)) + "` " +
+                constants.serverAddresses[sortedServerCounts[0][0]] + "\n"
+            );
+        }
+        log(newServerCountsMessage);
     }).catch(console.error);
 }

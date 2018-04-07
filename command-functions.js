@@ -54,6 +54,7 @@ function getServerCountsMessage(sortedServerCounts) {
     }
     return serverCountsMessage;
 }
+exports.getServerCountsMessage = getServerCountsMessage;
 
 function sortServerCounts(serverCounts) {
     let sortedServerCounts = [];
