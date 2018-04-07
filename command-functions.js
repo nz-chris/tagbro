@@ -17,7 +17,7 @@ exports.echo = function(message, argsString) {
 exports.giveServerCounts = async function(message) {
     let sortedServerCounts = await getSortedServerCounts();
     let serverCountsMessage = getServerCountsMessage(sortedServerCounts);
-    message.channel.send("```" + serverCountsMessage + "```");
+    message.channel.send(serverCountsMessage);
 };
 
 async function getSortedServerCounts() {
