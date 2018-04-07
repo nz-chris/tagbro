@@ -24,7 +24,7 @@ bot.on("ready", function () {
     if (bot.guilds.has(constants.oltpDiscId)) {
         log("found oltp discord");
         let oltpGuild = bot.guilds.get(constants.oltpDiscId);
-        if (oltpGuild.channels.has(constant.tagbrobotChannelId)) {
+        if (oltpGuild.channels.has(constants.tagbrobotChannelId)) {
             log("found tagbro-bot channel");
             let tagbroBotChannel = oltpGuild.channels.get(constants.tagbrobotChannelId);
             tagbroBotChannel.fetchMessages({ limit: 25 })
