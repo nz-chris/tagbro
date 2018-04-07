@@ -22,20 +22,19 @@ exports.giveServerCounts = async function(message) {
 
 async function getSortedServerCounts() {
     let serverCounts = {};
-    let count = 0;  // Amount of completed axios gets.
     for (let i = 0; i < constants.servers.length; i++) {
         let server = constants.servers[i];
         let address = constants.serverAddresses[server];
-        axios.get(address + "stats").then(response => {
-            log("got!");
-            count++;
+        let response;
+        try {
+            response = await axios.get(address + "stats");
             let data = response.data;
             serverCounts[server] = [data.players, data.games];
-            if (count === constants.servers.length) {
-                return sortServerCounts(serverCounts);
-            }
-        }).catch(console.error);
+        } catch (err) {
+            log(err)
+        }
     }
+    return sortServerCounts(serverCounts);
 }
 exports.getSortedServerCounts = getSortedServerCounts;
 
