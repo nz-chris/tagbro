@@ -16,10 +16,11 @@ bot.login(process.env.BOT_TOKEN);
 
 bot.on("ready", function () {
     log("Bot connected.");
+    log("Connected to Guilds: " + bot.guilds.array());
     bot.user.setActivity("out for you.", {type: "WATCHING"});
 
     // Find tagbro-bot channel in OLTP discord.
-    log("Connected to Guilds: " + bot.guilds.array());
+    log("Guild IDs: " + bot.guilds.keyArray() + ". Looking for: " + constants.oltpDiscId + ".");
     if (bot.guilds.hasOwnProperty(constants.oltpDiscId)) {
         log("found oltp discord");
         let oltpGuild = bot.guilds.get(constants.oltpDiscId);
