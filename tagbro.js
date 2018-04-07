@@ -19,7 +19,7 @@ bot.on("ready", function () {
     bot.user.setActivity("out for you.", {type: "WATCHING"});
 
     // Find tagbro-bot channel in OLTP discord.
-    log("Connected to Guilds: " + bot.guilds);
+    log("Connected to Guilds: " + Object.assign({}, ...Object.keys(bot.guilds).map(k => ({[k]: bot.guilds[k] * bot.guilds[k]}))));
     if (bot.guilds.hasOwnProperty(constants.oltpDiscId)) {
         log("found oltp discord");
         let oltpGuild = bot.guilds.get(constants.oltpDiscId);
