@@ -65,13 +65,11 @@ function updateServerCountsMessage(serverCountsMessage) {
     commands.getSortedServerCounts().then(response => {
         let newServerCountsMessage = "Server counts:\n\n";
         let sortedServerCounts = response;
-        log(sortedServerCounts);
-        log("IMPORTANT\n" + sortedServerCounts[0]);
         newServerCountsMessage = newServerCountsMessage.concat(
             "`" + commands.padServerStats(sortedServerCounts[0]) + "` " +
             constants.serverAddresses[sortedServerCounts[0][0]] + "\n\n*Other servers:*\n"
         );
-        for (let i = 0; i < sortedServerCounts.slice(1).length; i++) {
+        for (let i = 1; i < sortedServerCounts.slice(1).length; i++) {
             newServerCountsMessage = newServerCountsMessage.concat(
                 "`" + commands.padServerStats(sortedServerCounts[i]) + "` " +
                 constants.serverAddresses[sortedServerCounts[i][0]] + "\n"
