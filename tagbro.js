@@ -14,23 +14,32 @@ const bot = new Discord.Client({
 bot.destroy();
 bot.login(process.env.BOT_TOKEN);
 
-let serverCountsMessage;
-
 bot.on("ready", function () {
     log("Bot connected.");
     log("Connected to Guilds: " + bot.guilds.array());
     bot.user.setActivity("out for you.", {type: "WATCHING"});
 
+    let oltpGuild;
+    let tagbroBotChannel;
+    let serverCountsMessage;
     // Fetch the server counts message in OLTP #tagbro-bot.
     if (bot.guilds.has(constants.oltpDiscId)) {
-        let oltpGuild = bot.guilds.get(constants.oltpDiscId);
+        oltpGuild = bot.guilds.get(constants.oltpDiscId);
         if (oltpGuild.channels.has(constants.tagbrobotChannelId)) {
-            let tagbroBotChannel = oltpGuild.channels.get(constants.tagbrobotChannelId);
+            tagbroBotChannel = oltpGuild.channels.get(constants.tagbrobotChannelId);
             tagbroBotChannel.fetchMessage(constants.serverCountsMessageId)
                 .then(message => serverCountsMessage = message)
                 .catch(console.error);
         }
     }
+    let minutes = 2, the_interval = minutes * 60 * 1000;
+    setInterval(function() {
+        if (serverCountsMessage !== undefined) {
+            log("Updating server counts message.");
+            updateServerCountsMessage(serverCountsMessage);
+        }
+    }, the_interval);
+
 });
 
 bot.on("message", message => {
@@ -57,3 +66,7 @@ bot.on("message", message => {
         message.channel.send("Name: " + channel.name + ". ID: " + channel.id + ".");
     }
 });
+
+function updateServerCountsMessage(serverCountsMessage) {
+
+}

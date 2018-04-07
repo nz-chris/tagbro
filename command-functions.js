@@ -25,7 +25,8 @@ exports.giveServerCounts = function(message) {
             let data = response.data;
             serverCounts[server] = [data.players, data.games];
             if (count === constants.servers.length) {
-                createServerCountsMessage(serverCounts, message);
+                let serverCountsMessage = getServerCountsMessage(serverCounts);
+                message.channel.send("```" + serverCountsMessage + "```");
             }
         }).catch(function (error) {
             log(error);
@@ -33,28 +34,30 @@ exports.giveServerCounts = function(message) {
     }
 };
 
-function createServerCountsMessage(serverCounts, message) {
+function getServerCountsMessage(serverCounts) {
     let serverCountsMessage = "";
-    for (let i = 0; i < constants.servers.length; i++) {
-        let server = constants.servers[i];
-        let serverData = serverCounts[server];
+    let sortedServerCounts = getSortedServerCounts(serverCounts);
+    for (let i = 0; i < sortedServerCounts.length; i++) {
+        let server = sortedServerCounts[i][0];
+        let serverPlayers = sortedServerCounts[i][1];
+        let serverGames = sortedServerCounts[i][2];
         serverCountsMessage = serverCountsMessage.concat(
             utils.pad(" ".repeat(10), server + ":", false) +
-            utils.pad("00", serverData[0], true) +
+            utils.pad("00", serverPlayers, true) +
             " players and " +
-            utils.pad("00", serverData[1], true) +
+            utils.pad("00", serverGames, true) +
             " games.\n"
         );
     }
-    message.channel.send("```" + serverCountsMessage + "```");
+    return serverCountsMessage;
 }
 
-/* string build
-serverCounts = serverCounts.concat(
-    utils.pad(" ".repeat(10), server + ":", false) +
-    utils.pad("00", data.players, true) +
-    " players and " +
-    utils.pad("00", data.games, true) +
-    " games.\n"
-);
-*/
+function getSortedServerCounts(serverCounts) {
+    let sortedServerCounts = [];
+    for (let i = 0; i < constants.servers.length; i++) {
+        let server = constants.servers[i];
+        let serverData = serverCounts[server];
+        sortedServerCounts.push([server, serverData[0], serverData[1]]);
+    }
+    return sortedServerCounts;
+}
