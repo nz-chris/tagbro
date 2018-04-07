@@ -68,5 +68,7 @@ bot.on("message", message => {
 });
 
 function updateServerCountsMessage(serverCountsMessage) {
-    log(commands.getSortedServerCounts());
+    commands.getSortedServerCounts().then(sortedServerCounts => {
+        log(sortedServerCounts);
+    }).catch(error => log(error));
 }

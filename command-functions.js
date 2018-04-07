@@ -20,10 +20,9 @@ exports.giveServerCounts = async function(message) {
     message.channel.send("```" + serverCountsMessage + "```");
 };
 
-exports.getSortedServerCounts = function() {
-    getServerCounts().then(serverCounts => {
-        return getSortedServerCounts(serverCounts);
-    });
+exports.getSortedServerCounts = async function() {
+    log("in getSortedServerCounts");
+    return getSortedServerCounts(await getServerCounts());
 };
 
 async function getServerCounts() {
@@ -46,6 +45,7 @@ async function getServerCounts() {
 }
 
 function getServerCountsMessage(serverCounts) {
+    log("in getServerCountsMessage");
     let serverCountsMessage = "";
     let sortedServerCounts = getSortedServerCounts(serverCounts);
     for (let i = 0; i < sortedServerCounts.length; i++) {
