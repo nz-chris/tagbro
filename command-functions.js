@@ -15,6 +15,16 @@ exports.echo = function(message, argsString) {
 };
 
 exports.giveServerCounts = function(message) {
+    let serverCounts = getServerCounts();
+    let serverCountsMessage = getServerCountsMessage(serverCounts);
+    message.channel.send("```" + serverCountsMessage + "```");
+};
+
+exports.getSortedServerCounts = function() {
+    return getSortedServerCounts(getServerCounts());
+};
+
+function getServerCounts() {
     let serverCounts = {};
     let count = 0;  // Amount of completed axios gets.
     for (let i = 0; i < constants.servers.length; i++) {
@@ -25,14 +35,13 @@ exports.giveServerCounts = function(message) {
             let data = response.data;
             serverCounts[server] = [data.players, data.games];
             if (count === constants.servers.length) {
-                let serverCountsMessage = getServerCountsMessage(serverCounts);
-                message.channel.send("```" + serverCountsMessage + "```");
+                return serverCounts;
             }
         }).catch(function (error) {
             log(error);
         });
     }
-};
+}
 
 function getServerCountsMessage(serverCounts) {
     let serverCountsMessage = "";
