@@ -30,7 +30,7 @@ bot.on("ready", function () {
             tagbroBotChannel.fetchMessages({ limit: 25 })
                 .then(messages => {
                     log("found " + messages.size + " messages. bot.user.id = " + bot.user.id);
-                    log(messages.entries().length);
+                    log(Object.keys(messages).length);
                     for (let i = 0; i < Object.keys(messages).length; i++) {
                         log("bing");
                         let messageId = messages.entries.get(i)[0];
