@@ -69,7 +69,7 @@ function updateServerCountsMessage(serverCountsMessage) {
             "`" + commands.padServerStats(sortedServerCounts[0]) + "` <" +
             constants.serverAddresses[sortedServerCounts[0][0]] + ">\n\n*Other servers:*\n"
         );
-        for (let i = 1; i < sortedServerCounts.slice(1).length; i++) {
+        for (let i = 1; i < sortedServerCounts.length; i++) {
             newServerCountsMessage = newServerCountsMessage.concat(
                 "`" + commands.padServerStats(sortedServerCounts[i]) + "` <" +
                 constants.serverAddresses[sortedServerCounts[i][0]] + ">\n"
