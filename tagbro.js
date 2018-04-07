@@ -19,16 +19,19 @@ bot.on("ready", function () {
     log("Connected to Guilds: " + bot.guilds.array());
     bot.user.setActivity("out for you.", {type: "WATCHING"});
 
+    // Set up server count message updating.
     let oltpGuild;
     let tagbroBotChannel;
     let serverCountsMessage;
-    // Fetch the server counts message in OLTP #tagbro-bot.
     if (bot.guilds.has(constants.oltpDiscId)) {
         oltpGuild = bot.guilds.get(constants.oltpDiscId);
         if (oltpGuild.channels.has(constants.tagbrobotChannelId)) {
             tagbroBotChannel = oltpGuild.channels.get(constants.tagbrobotChannelId);
             tagbroBotChannel.fetchMessage(constants.serverCountsMessageId)
-                .then(message => serverCountsMessage = message)
+                .then(message => {
+                    serverCountsMessage = message;
+                    updateServerCountsMessage(serverCountsMessage);
+                })
                 .catch(console.error);
         }
     }
