@@ -5,7 +5,7 @@ const utils = require("./utils.js");
 const {log} = require("./utils.js");
 
 const config = require("./config.json");
-const prefix = config.prefix;
+
 
 exports.echo = function(message, argsString) {
     if (message.author.tag === "Zagd#6682") {
@@ -19,6 +19,12 @@ exports.giveServerCounts = async function(message) {
     let serverCountsMessage = getServerCountsMessage(sortedServerCounts);
     message.channel.send(serverCountsMessage + "*also see #tagbro-bot channel*");
 };
+
+exports.giveRankedPugsMatchmakingLink = function(message) {
+    message.channel.send("<http://lejdesigns.com/rankedPUGs/matchmaking.php>");
+};
+
+//TODO: consider moving most of the functionality below this point to a new module, for server counts stuff.
 
 async function getSortedServerCounts() {
     let serverCounts = {};

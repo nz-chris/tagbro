@@ -19,6 +19,7 @@ bot.on("ready", function () {
     log("Connected to Guilds: " + bot.guilds.array());
     bot.user.setActivity("out for you.", {type: "WATCHING"});
 
+    //TODO: consider moving below code elsewhere to tidy up this main module.
     // Set up server count message updating.
     let oltpGuild;
     let tagbroBotChannel;
@@ -57,6 +58,9 @@ bot.on("message", message => {
     }
     if (new RegExp(regex.source.concat("echo" + " .+")).test(message.content)) {
         commands.echo(message, argsString);
+    }
+    if (message.content === prefix + "rpugs matchmaking" || message.content === prefix + "rpm" ) {
+        commands.giveRankedPugsMatchmakingLink(message);
     }
 });
 
