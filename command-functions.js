@@ -40,9 +40,10 @@ exports.getSortedServerCounts = getSortedServerCounts;
 
 function getServerCountsMessage(sortedServerCounts) {
     let serverCountsMessage = "";
+    let largestServerStat = getLargestServerStat(sortedServerCounts);
     for (let i = 0; i < sortedServerCounts.length; i++) {
         serverCountsMessage = serverCountsMessage.concat(
-            "`" + padServerStats(sortedServerCounts[i]) + "` <" +
+            "`" + padServerStats(sortedServerCounts[i], largestServerStat) + "` <" +
             constants.serverAddresses[sortedServerCounts[i][0]] + ">\n"
         );
     }
@@ -59,12 +60,24 @@ function sortServerCounts(serverCounts) {
     return sortedServerCounts;
 }
 
-function padServerStats(serverStats) {
+function getLargestServerStat(serverStats) {
+    let maxSoFar = -1;
+    for (let i = 0; i < serverStats.length; i++) {
+        let serverStat = serverStats[i];
+        for (let j = 0; j < serverStat.length; j++) {
+            maxSoFar = Math.max(maxSoFar, serverStat[1], serverStat[2]);
+        }
+    }
+    return maxSoFar;
+}
+exports.getLargestServerStat = getLargestServerStat;
+
+function padServerStats(serverStats, numberPadSize) {
     let server = serverStats[0];
     let serverPlayers = serverStats[1];
     let serverGames = serverStats[2];
     return utils.pad(" ".repeat(10), server + ":", false) +
-        utils.pad("00", serverPlayers, true) + " players and " +
-        utils.pad("00", serverGames, true) + " games";
+        utils.pad(" ".repeat(numberPadSize), serverPlayers, true) + " players and " +
+        utils.pad(" ".repeat(numberPadSize), serverGames, true) + " games";
 }
 exports.padServerStats = padServerStats;
