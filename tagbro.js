@@ -62,6 +62,16 @@ bot.on("message", message => {
     if (message.content === prefix + "rpugs matchmaking" || message.content === prefix + "rpm" ) {
         commands.giveRankedPugsMatchmakingLink(message);
     }
+    if (message.content === prefix + "start typing" ) {
+        if (message.author.tag === "Zagd#6682") {
+            message.channel.startTyping();
+        }
+    }
+    if (message.content === prefix + "stop typing" ) {
+        if (message.author.tag === "Zagd#6682") {
+            message.channel.stopTyping(true);
+        }
+    }
 });
 
 function updateServerCountsMessage(serverCountsMessage) {

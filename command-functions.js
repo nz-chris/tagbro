@@ -7,7 +7,7 @@ const {log} = require("./utils.js");
 const config = require("./config.json");
 
 
-exports.echo = function(message, argsString) {
+exports.echo = function(message, argsString) { //TODO: make my tag below a constant in constants.js
     if (message.author.tag === "Zagd#6682") {
         message.delete().catch(O_o=>{});
         message.channel.send(argsString);
@@ -21,7 +21,7 @@ exports.giveServerCounts = async function(message) {
 };
 
 exports.giveRankedPugsMatchmakingLink = function(message) {
-    message.channel.send("<http://lejdesigns.com/rankedPUGs/matchmaking.php>");
+    message.channel.send("<http://lejdesigns.com/rankedPUGs/matchmaking.php>"); //TODO: make link in constants.js
 };
 
 //TODO: consider moving most of the functionality below this point to a new module, for server counts stuff.
