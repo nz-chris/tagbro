@@ -74,9 +74,10 @@ bot.on("message", message => {
         }
     }
     //TODO: abstractify below to handle any userscript name of mine. also put install links in constants.js
+    // map userscript nicknames to full names. e.g superextend: Lej's Ranked PUGs Super Extend
     if (message.content === prefix + "install-link superextend" || message.content === prefix + "il superextend" ) {
         message.channel.startTyping();
-        message.channel.send("<https://github.com/zagd/tagpro-scripts/raw/master/lej-rpugs-super-extend.user.js>");
+        message.channel.send("*Lej's Ranked PUGs Super Extend, two click install link:* <https://github.com/zagd/tagpro-scripts/raw/master/lej-rpugs-super-extend.user.js>");
         message.channel.stopTyping(true);
     }
 });
