@@ -20,6 +20,7 @@ bot.on("ready", function () {
     bot.user.setActivity("out for you.", {type: "WATCHING"});
 
     //TODO: consider moving below code elsewhere to tidy up this main module.
+    //TODO: move Zagd only commands into their own module. echo and start typing etc.
     // Set up server count message updating.
     let oltpGuild;
     let tagbroBotChannel;
@@ -48,29 +49,35 @@ bot.on("ready", function () {
 bot.on("message", message => {
     if (message.content.indexOf(config.prefix) !== 0) return;
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
-    const command = args.shift().toLowerCase();
+    const command = args.shift().toLowerCase(); //TODO: fix this. it thinks commands cant have spaces. maybe they shouldnt?
     const argsString = message.content.slice((prefix + command + " ").length);
     const regex = new RegExp("^" + prefix);
     log("Responding to " + prefix + command + ".");
 
-    if (message.content === prefix + "server count" || message.content === prefix + "sc" ) {
+    if (message.content === prefix + "server-count" || message.content === prefix + "sc" ) {
         commands.giveServerCounts(message);
     }
     if (new RegExp(regex.source.concat("echo" + " .+")).test(message.content)) {
         commands.echo(message, argsString);
     }
-    if (message.content === prefix + "rpugs matchmaking" || message.content === prefix + "rpm" ) {
+    if (message.content === prefix + "rpugs-matchmaking" || message.content === prefix + "rpm" ) {
         commands.giveRankedPugsMatchmakingLink(message);
     }
-    if (message.content === prefix + "start typing" ) {
+    if (message.content === prefix + "start-typing" ) {
         if (message.author.tag === "Zagd#6682") {
             message.channel.startTyping();
         }
     }
-    if (message.content === prefix + "stop typing" ) {
+    if (message.content === prefix + "stop-typing" ) {
         if (message.author.tag === "Zagd#6682") {
             message.channel.stopTyping(true);
         }
+    }
+    //TODO: abstractify below to handle any userscript name of mine.
+    if (message.content === prefix + "install-link superextend" || message.content === prefix + "il superextend" ) {
+        message.channel.startTyping();
+        message.channel.send("https://github.com/zagd/tagpro-scripts/raw/master/lej-rpugs-super-extend.user.js");
+        message.channel.stopTyping(true);
     }
 });
 
