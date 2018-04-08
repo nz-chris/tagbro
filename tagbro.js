@@ -73,10 +73,10 @@ bot.on("message", message => {
             message.channel.stopTyping(true);
         }
     }
-    //TODO: abstractify below to handle any userscript name of mine.
+    //TODO: abstractify below to handle any userscript name of mine. also put install links in constants.js
     if (message.content === prefix + "install-link superextend" || message.content === prefix + "il superextend" ) {
         message.channel.startTyping();
-        message.channel.send("https://github.com/zagd/tagpro-scripts/raw/master/lej-rpugs-super-extend.user.js");
+        message.channel.send("<https://github.com/zagd/tagpro-scripts/raw/master/lej-rpugs-super-extend.user.js>");
         message.channel.stopTyping(true);
     }
 });
