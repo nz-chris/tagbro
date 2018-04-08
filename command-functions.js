@@ -17,7 +17,7 @@ exports.echo = function(message, argsString) {
 exports.giveServerCounts = async function(message) {
     let sortedServerCounts = await getSortedServerCounts();
     let serverCountsMessage = getServerCountsMessage(sortedServerCounts);
-    message.channel.send(serverCountsMessage);
+    message.channel.send(serverCountsMessage + "*also see #tagbro-bot channel*");
 };
 
 async function getSortedServerCounts() {
@@ -43,7 +43,7 @@ function getServerCountsMessage(sortedServerCounts) {
     let largestServerStat = getLargestServerStat(sortedServerCounts);
     for (let i = 0; i < sortedServerCounts.length; i++) {
         serverCountsMessage = serverCountsMessage.concat(
-            "`" + padServerStats(sortedServerCounts[i], largestServerStat) + "` <" +
+            "`" + padServerStats(sortedServerCounts[i], largestServerStat.toString().length) + "` <" +
             constants.serverAddresses[sortedServerCounts[i][0]] + ">\n"
         );
     }
