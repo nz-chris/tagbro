@@ -76,7 +76,7 @@ function updateServerCountsMessage(existingServerCountsMessage) {
         log("`" + sortedServerCountsMessage.charAt(diamSplitIndex) + "'");
         let newServerCountsMessage = "Server counts:\n\n";
         newServerCountsMessage = newServerCountsMessage.concat(sortedServerCountsMessage.slice(0, diamSplitIndex));
-        newServerCountsMessage = newServerCountsMessage.concat("\n\n*Other servers:*\n");
+        newServerCountsMessage = newServerCountsMessage.concat("\n*Other servers:*\n");
         newServerCountsMessage = newServerCountsMessage.concat(sortedServerCountsMessage.slice(diamSplitIndex));
         newServerCountsMessage = newServerCountsMessage.concat("\n*updated every 2 minutes. use `..sc` to manually check.*");
         existingServerCountsMessage.edit(newServerCountsMessage);
