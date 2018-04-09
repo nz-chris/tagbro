@@ -1,1 +1,1 @@
-worker: node tagbro.js
+worker: node ./src/tagbro.js

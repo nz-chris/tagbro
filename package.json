@@ -2,14 +2,14 @@
   "name": "TagBro",
   "version": "1.0.0",
   "description": "Helping TagPro players.",
-  "main": "tagbro.js",
+  "main": "./src/tagbro.js",
   "author": "Zagd",
   "engines": {
     "node": "8.4.0",
     "npm": "5.3.0"
   },
   "scripts": {
-    "start": "node tagbro.js"
+    "start": "node ./src/tagbro.js"
   },
   "dependencies": {
     "axios": "^0.18.0",
