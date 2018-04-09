@@ -72,7 +72,7 @@ function updateServerCountsMessage(existingServerCountsMessage) {
     log("Updating server counts message.");
     module.exports.getSortedServerCountsMessage().then(response => {
         let sortedServerCountsMessage = response;
-        let diamSplitIndex = sortedServerCountsMessage.indexOf("/") + 1;
+        let diamSplitIndex = sortedServerCountsMessage.indexOf(".com/") + ".com/".length;
         let newServerCountsMessage = "Server counts:\n\n";
         newServerCountsMessage = newServerCountsMessage.concat(sortedServerCountsMessage.slice(0, diamSplitIndex));
         newServerCountsMessage = newServerCountsMessage.concat("\n\n*Other servers:*\\n");
