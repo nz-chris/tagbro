@@ -4,7 +4,7 @@
 
 const axios = require("axios");
 
-const constants = require("./constants.js");
+const constants = require("../constants.js");
 const utils = require("./utils.js");
 const {log, err} = require("./utils.js");
 
