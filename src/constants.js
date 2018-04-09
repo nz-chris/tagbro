@@ -20,8 +20,12 @@ exports.serverAddresses = {
     "Chord": "http://tagpro-chord.koalabeast.com/"
 };
 
+exports.rpugsAddress = "http://lejdesigns.com/rankedPUGs/matchmaking.php";
+
 exports.oltpDiscId = "394459353060605953";
 
 exports.tagbrobotChannelId = "431742487695065108";
 
 exports.serverCountsMessageId = "431827952892641280";
+
+exports.zagdTag = "Zagd#6682";
