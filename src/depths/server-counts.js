@@ -62,7 +62,7 @@ async function getSortedServerCounts() {
             let data = response.data;
             serverCounts[server] = [data.players, data.games];
         } catch (error) {
-            err(error);
+            err("Failed axios get.");
         }
     }
     return sortServerCounts(serverCounts);
@@ -72,7 +72,7 @@ function updateServerCountsMessage(existingServerCountsMessage) {
     log("Updating server counts message.");
     module.exports.getSortedServerCountsMessage().then(response => {
         let sortedServerCountsMessage = response;
-        let diamSplitIndex = sortedServerCountsMessage.indexOf("games`") + "games`".length;
+        let diamSplitIndex = sortedServerCountsMessage.indexOf("/") + 1;
         let newServerCountsMessage = "Server counts:\n\n";
         newServerCountsMessage = newServerCountsMessage.concat(sortedServerCountsMessage.slice(0, diamSplitIndex));
         newServerCountsMessage = newServerCountsMessage.concat("\n\n*Other servers:*\\n");
