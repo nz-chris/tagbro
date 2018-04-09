@@ -8,7 +8,7 @@ const constants = require("../constants.js");
 const utils = require("../utils.js");
 const {log, err} = require("../utils.js");
 
-exports = {
+module.exports = {
     getSortedServerCountsMessage: async function () {
         let sortedServerCountsMessage = "";
         let sortedServerCounts = await getSortedServerCounts();
