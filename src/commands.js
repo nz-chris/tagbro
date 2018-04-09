@@ -9,7 +9,7 @@ const constants = require("./constants.js");
 exports.giveSortedServerCounts = async function(message) {
     let sortedServerCountsMessage = await serverCounts.getSortedServerCountsMessage();
     if (message.guild.id === constants.oltpDiscId) {
-        message.channel.send(sortedServerCountsMessage + "*also see #tagbro-bot channel*");
+        message.channel.send(sortedServerCountsMessage + "\n*also see #tagbro-bot channel*");
     } else {
         message.channel.send(sortedServerCountsMessage);
     }
