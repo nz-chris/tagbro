@@ -31,8 +31,10 @@ exports.info = {
     },
     "install_links": {
         "alias": "ils",
-        "description": "Get a reply with a list of potential user-scripts that can be obtained via" +
-        " `" + prefix +"install_link " + this.install_link.args.join(" ") + "`.",
+        get description() {
+            return "Get a reply with a list of potential user-scripts that can be obtained via" +
+                " `" + prefix +"install_link " + this.install_link.args.join(" ") + "`."
+        },
         "args": ["REPLY-DESTINATION"],
         "validArgValues": [["here", "me"]],
         "argDescriptions": ["Where the reply should be sent."],
