@@ -6,7 +6,7 @@
 const serverCounts = require("./depths/server-stats.js");
 const {log, err} = require("./utils.js");
 const constants = require("./constants.js");
-const commandsInfo = require("../commands-info.js");
+const commandsInfo = require("./commands-info.js");
 
 const config = require("../config.json");
 const prefix = config.prefix;
