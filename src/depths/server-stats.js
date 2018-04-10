@@ -8,7 +8,7 @@ const utils = require("../utils.js");
 const {log, err} = require("../utils.js");
 const constants = require("../constants.js");
 
-const config = require("../config.json");
+const config = require("../../config.json");
 const prefix = config.prefix;
 
 module.exports = {
