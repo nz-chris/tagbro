@@ -17,6 +17,7 @@ const prefix = config.prefix;
 exports.delegateCommandMessage = async function(message) {
     const args = message.content.slice(config.prefix.length).trim().split(/[ |\t]+/g);
     const command = args.shift().toLowerCase();
+    log(commandFunctions + "<-------------------------------------------");
     if (commandFunctions.has(command) || commandsInfo.commandAliases.has(command)) {
         log("Responding to `" + prefix + command + "`.");
         let commandFunction = null;
