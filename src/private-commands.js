@@ -2,8 +2,8 @@
  * Commands only usable by Zagd.
  */
 
-const constants = require("./constants.js")
 const {log, err} = require("./utils.js");
+const constants = require("./constants.js");
 
 exports.echo = function(message, argsString) {
     if (notZagd(message)) return;

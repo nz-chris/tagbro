@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 
 const commands = require("./commands.js");
 const privateCommands = require("./private-commands.js");
-const serverCounts = require("./depths/server-counts.js");
+const serverCounts = require("./depths/server-stats.js");
 const {log, err} = require("./utils.js");
 
 const config = require("../config.json");
@@ -24,10 +24,9 @@ bot.on("ready", function () {
 });
 
 bot.on("message", message => {
-    // TODO: move ALL of this into commands.js. give the message to a function that delegates it to various command funcs.
-    // so commands.js should only have ONE export.
-    // do the same for PRIVATE COMMANDS!!!... wait no
     if (message.content.indexOf(config.prefix) !== 0) return;
+    if (!commands.delegateCommandMessage(message)) privateCommands.de;
+    else ()
     const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLowerCase();
     const argsString = message.content.slice((prefix + command + " ").length);
@@ -35,7 +34,7 @@ bot.on("message", message => {
     log("Responding to " + prefix + command + ".");
 
     if (message.content === prefix + "server-count" || message.content === prefix + "sc" ) {
-        commands.giveSortedServerCounts(message).catch(err);
+        commands.giveSortedServerStats(message).catch(err);
     }
     if (new RegExp(regex.source.concat("echo" + " .+")).test(message.content)) {
         privateCommands.echo(message, argsString);
@@ -51,3 +50,6 @@ bot.on("message", message => {
         message.channel.stopTyping(true);
     }
 });
+
+//TODO: misuse of command response. "Usage: .."
+//TODO:

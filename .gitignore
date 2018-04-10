@@ -59,3 +59,5 @@ typings/
 
 # tagbro offline copy
 offline-tagbro.js
+
+sandbox.js
