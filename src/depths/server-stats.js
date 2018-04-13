@@ -7,9 +7,9 @@ const axios = require("axios");
 const utils = require("../utils.js");
 const {log, err} = require("../utils.js");
 const constants = require("../constants.js");
+const commandsInfo = require("../commands-info.js");
 
 const config = require("../../config.json");
-const prefix = config.prefix;
 
 module.exports = {
     getSortedServerStatsMessage: async function () {
@@ -19,8 +19,8 @@ module.exports = {
         let largestGameCountDigits = getLargestGameCount(sortedServerStats).toString().length;
         for (let i = 0; i < sortedServerStats.length; i++) {
             sortedServerStatsMessage = sortedServerStatsMessage.concat(
-                "`" + padServerStats(sortedServerStats[i], largestPlayerCountDigits, largestGameCountDigits) +
-                "` <" + constants.serverAddresses[sortedServerStats[i][0]] + ">"
+                formatServerStats(sortedServerStats[i], largestPlayerCountDigits, largestGameCountDigits) +
+                " <" + constants.serverAddresses[sortedServerStats[i][0]] + ">"
             );
             if (i !== sortedServerStats.length - 1) {
                 sortedServerStatsMessage = sortedServerStatsMessage.concat("\n");
@@ -61,9 +61,9 @@ async function getSortedServerStats() {
         let address = constants.serverAddresses[server];
         let response;
         try {
-            response = await axios.get(address + "stats");
+            response = await axios["get"](address + "stats");
             let data = response.data;
-            serverStats[server] = [data.players, data.games];
+            serverStats[server] = [data["players"], data["games"]];
         } catch (error) {
             err("Failed axios get.");
         }
@@ -81,7 +81,7 @@ function updateServerStatsMessage(existingServerStatsMessage) {
         newServerStatsMessage = newServerStatsMessage.concat("\n*Other servers:*\n");
         newServerStatsMessage = newServerStatsMessage.concat(sortedServerStatsMessage.slice(diamSplitIndex));
         newServerStatsMessage = newServerStatsMessage.concat(
-            "\n*updated every 2 minutes. use `" + prefix + "sc` to manually check.*"
+            "\n*updated every 2 minutes. use `" + config.prefix + commandsInfo.commands.server_stats.alias +"` to manually check.*"
         );
         existingServerStatsMessage.edit(newServerStatsMessage);
     }).catch(err);
@@ -97,13 +97,25 @@ function sortServerStats(serverStats) {
     return sortedServerStats;
 }
 
-function padServerStats(serverStats, playerCountPadSize, gameCountPadSize) {
+function formatServerStats(serverStats, playerCountPadSize, gameCountPadSize) {
     let server = serverStats[0];
     let serverPlayers = serverStats[1];
     let serverGames = serverStats[2];
-    return utils.pad(" ".repeat(10), server + ":", false) +
-        utils.pad(" ".repeat(playerCountPadSize), serverPlayers, true) + " players and " +
-        utils.pad(" ".repeat(gameCountPadSize), serverGames, true) + " games";
+    let playersWord = "player";
+    let gamesWord = "game";
+    if (serverPlayers !== 1) {
+        playersWord = playersWord.concat("s");
+    } else {
+        playersWord = playersWord.concat(constants.spaceZws);
+    }
+    if (serverGames !== 1) {
+        gamesWord = gamesWord.concat("s");
+    } else {
+        gamesWord = gamesWord.concat(constants.spaceZws);
+    }
+    return "`" + utils.pad(" ".repeat(10), server + ":", false) +
+        utils.pad(" ".repeat(playerCountPadSize), serverPlayers, true) + " " + playersWord + " and " +
+        utils.pad(" ".repeat(gameCountPadSize), serverGames, true) + " " + gamesWord + "`";
 }
 
 function getLargestPlayerCount(serverStats) {

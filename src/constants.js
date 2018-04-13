@@ -29,3 +29,5 @@ exports.tagbrobotChannelId = "431742487695065108";
 exports.serverStatsMessageId = "431827952892641280";
 
 exports.zagdTag = "Zagd#6682";
+
+exports.spaceZws = " \u200B";
