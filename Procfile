@@ -1,1 +1,1 @@
-worker: node ./src/tagbro.js
+worker: npm start
