@@ -12,8 +12,13 @@
     "start": "node ./src/tagbro.js"
   },
   "dependencies": {
-    "axios": "^0.21.1",
     "discord.js": "^12.5.3",
+    "axios": "^0.21.1",
+    "jsdom": "^16.6.0",
+    "lodash": "^4.17.21",
     "pluralize": "^8.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0"
   }
 }
