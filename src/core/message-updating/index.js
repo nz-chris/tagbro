@@ -1,6 +1,6 @@
 const axios = require('axios');
 const { JSDOM } = require('jsdom');
-const { range } = require('lodash');
+const { range, has } = require('lodash');
 const pluralize = require('pluralize');
 
 const constants = require('../constants');
@@ -47,13 +47,23 @@ const getExistingMessageByPrefix = (house, prefix) => new Promise(resolve => {
 });
 
 const getNewStatsMessageContent = async () => {
-    const data = await getStatsData();
-    if (!data) return;
-    const oceData = data?.Oceania;
-    if (!oceData || !oceData.ingame || !oceData.games || !oceData.matchmaking) {
-        err(`Couldn't get valid data from ${constants.tpa}${constants.tpaStatsSuffix}. oceData looks like:\n${oceData}`);
+    const url = `${constants.tpa}${constants.tpaStatsSuffix}`;
+    let response;
+    try {
+        response = await axios.get(url);
+    } catch (e) {
+        err('Failed to get server stats.');
+        err(e);
         return;
     }
+
+    if (!validateResponseData(response, ['Oceania.ingame', 'Oceania.games', 'Oceania.matchmaking'])) {
+        err(`Couldn't get valid data from ${url}. Response data looks like:\n${JSON.stringify(response?.data)}`);
+        return;
+    }
+
+    const oceData = response.data.Oceania;
+
     return constants.serverStatsMessagePrefix +
         `**__${oceData.ingame}__** ${pluralize('players', oceData.ingame)} in ` +
         `**__${oceData.games}__** ${pluralize('games', oceData.games)} ` +
@@ -69,13 +79,24 @@ const getNewLastMatchMessageContent = async () => {
     }
 
     const matchUrl = `${constants.eua}${constants.euaMatchDataSuffix}${matchId}`;
-    const matchResponse = await axios.get(matchUrl);
-    const matchData = matchResponse.data;
-
-    if (!matchData) {
-        err(`Couldn't get valid match data from ${matchUrl}. matchData looks like:\n${matchData}`);
+    let matchResponse;
+    try {
+        matchResponse = await axios.get(matchUrl);
+    } catch (e) {
+        err('Failed to get match response.');
+        err(e);
         return;
     }
+
+    if (!validateResponseData(matchResponse, ['duration', 'date', 'players'])) {
+        err(
+            `Couldn't get valid match response from ${matchUrl}. ` +
+            `Response data looks like:\n${JSON.stringify(matchResponse?.data)}`
+        );
+        return;
+    }
+
+    const matchData = matchResponse.data;
 
     const matchDuration = matchData.duration / 60;
 
@@ -137,21 +158,19 @@ const contentCallbacksByPrefix = Object.freeze({
     [constants.lastMatchMessagePrefix]: getNewLastMatchMessageContent,
 });
 
-const getStatsData = async () => {
-    try {
-        const response = await axios.get(`${constants.tpa}${constants.tpaStatsSuffix}`);
-        return response.data;
-    } catch (e) {
-        err('Failed to get server stats.');
-        err(e);
-    }
-};
-
 const getLastPublicMatchId = () => new Promise(async resolve => {
     const maxPages = 10;
     for (let page of range(maxPages)) {
         page += 1;
-        const matchesResponse = await axios.get(`${constants.eua}${constants.euaSydneyMatchesSuffix}${page}`);
+        let matchesResponse;
+        try {
+            matchesResponse = await axios.get(`${constants.eua}${constants.euaSydneyMatchesSuffix}${page}`);
+        } catch (e) {
+            err('Failed to get matches page.');
+            err(e);
+            return;
+        }
+
         const dom = new JSDOM(matchesResponse.data);
         const tbody = dom.window.document.body.querySelector('tbody');
         const rows = [...tbody.rows];
@@ -160,3 +179,9 @@ const getLastPublicMatchId = () => new Promise(async resolve => {
         else if (page === maxPages) resolve(undefined);
     }
 });
+
+const validateResponseData = (response, expectedKeys) => {
+    if (!response) return false;
+    if (!response.data) return false;
+    return expectedKeys.every(expectedKey => has(response.data, expectedKey));
+};
