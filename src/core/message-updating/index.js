@@ -49,7 +49,11 @@ const getExistingMessageByPrefix = (house, prefix) => new Promise(resolve => {
 const getNewStatsMessageContent = async () => {
     const data = await getStatsData();
     if (!data) return;
-    const oceData = data.Oceania;
+    const oceData = data?.Oceania;
+    if (!oceData || !oceData.ingame || !oceData.games || !oceData.matchmaking) {
+        err(`Couldn't get valid data from ${constants.tpa}${constants.tpaStatsSuffix}. oceData looks like:\n${oceData}`);
+        return;
+    }
     return constants.serverStatsMessagePrefix +
         `**__${oceData.ingame}__** ${pluralize('players', oceData.ingame)} in ` +
         `**__${oceData.games}__** ${pluralize('games', oceData.games)} ` +
@@ -59,10 +63,19 @@ const getNewStatsMessageContent = async () => {
 
 const getNewLastMatchMessageContent = async () => {
     const matchId = await getLastPublicMatchId();
-    if (!matchId) return;
+    if (!matchId) {
+        err(`Couldn't get the latest public match ID from ${constants.eua}.`);
+        return;
+    }
 
-    const matchResponse = await axios.get(`${constants.eua}${constants.euaMatchDataSuffix}${matchId}`);
+    const matchUrl = `${constants.eua}${constants.euaMatchDataSuffix}${matchId}`;
+    const matchResponse = await axios.get(matchUrl);
     const matchData = matchResponse.data;
+
+    if (!matchData) {
+        err(`Couldn't get valid match data from ${matchUrl}. matchData looks like:\n${matchData}`);
+        return;
+    }
 
     const matchDuration = matchData.duration / 60;
 
@@ -126,7 +139,7 @@ const contentCallbacksByPrefix = Object.freeze({
 
 const getStatsData = async () => {
     try {
-        const response = await axios.get(`${constants.tpa}stats`);
+        const response = await axios.get(`${constants.tpa}${constants.tpaStatsSuffix}`);
         return response.data;
     } catch (e) {
         err('Failed to get server stats.');
