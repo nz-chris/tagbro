@@ -1,10 +1,10 @@
-const setup = require('./core/setup');
+const setUp = require('./core/setup');
 const constants = require('./core/constants');
 const { updateMessageOnInterval } = require('./core/message-updating');
 
-setup();
+setUp();
 
-bot.on('ready', async () => {
-    updateMessageOnInterval(constants.serverStatsMessagePrefix, 60_000);
-    updateMessageOnInterval(constants.lastMatchMessagePrefix, 120_000);
+bot.on('ready', () => {
+    updateMessageOnInterval(constants.serverStatsMessagePrefix, 1);
+    updateMessageOnInterval(constants.lastMatchMessagePrefix, 2);
 });

@@ -1,4 +1,6 @@
 module.exports = {
+    tagbrosHouse: 'tagbros-house',
+
     tpa: 'https://tagpro.koalabeast.com/',
     tpaStatsSuffix: 'stats',
 

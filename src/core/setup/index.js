@@ -1,13 +1,18 @@
-process.env.NODE_ENV !== 'production' && require('dotenv').config();
-const Discord = require('discord.js');
-const pluralize = require('pluralize');
+const isProd = process.env.NODE_ENV === 'production';
+!isProd && require('dotenv').config();
 
+const Discord = require('discord.js');
+const { Intents } = require('discord.js');
+const pluralize = require('pluralize');
 
 const { log, err } = require('../utils/logging');
 const { getGuildNames, getHouses } = require('../utils/guilds');
+const setUpCommands = require('../commands/setup');
 
 module.exports = () => {
-    global.bot = new Discord.Client();
+    global.isProd = isProd;
+
+    global.bot = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
     // To clear in teardown.
     global.intervals = new Set();
@@ -24,12 +29,12 @@ module.exports = () => {
         process.exit();
     });
 
-    bot.on('ready', async () => {
+    bot.on('ready', () => {
         log('Bot ready.');
         log(`Connected to Guilds: ${getGuildNames()}.`);
         log(`Found ${pluralize('houses', getHouses().length, true)}.`);
-        bot.user.setActivity('out for you.', { type: 'WATCHING' })
-            .then(() => log('Activity set.'))
-            .catch(err);
+        bot.user.setActivity('out for you.', { type: 'WATCHING' });
+
+        setUpCommands().then(() => log('Commands set up.'));
     });
 };
