@@ -19,7 +19,7 @@ const border = {
     joinRight: '┤',
 };
 
-const getCellText = cell => cell?.text || cell || '';
+const getCellText = cell => cell?.text ?? (cell || '');
 const getCellLines = cell => getCellText(cell).split('\n');
 const getCellTextWidth = cell => Math.max(...getCellLines(cell).map(line => line.length));
 const getCellSpan = cell => cell?.span || 1;
