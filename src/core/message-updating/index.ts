@@ -1,22 +1,22 @@
-const pluralize = require('pluralize');
+import pluralize from "pluralize";
 
-const constants = require('../constants');
-const { err } = require('../utils/logging');
-const {
+import constants from "../constants";
+import {err} from "../utils/logging";
+import {
     getLatestPubId,
     getMatchData,
     getMatchDurationString,
     getMatchTimeStampString,
-    getPlayers,
-} = require('../data/tagproEu');
-const { getHouses } = require('../utils/guilds');
-const table = require('../utils/table');
-const serverStats = require('../messages/serverStats');
+    getPlayers
+} from "../data/tagproEu";
+import {getHouses} from "../utils/guilds";
+import table from "../utils/table";
+import serverStats from "../messages/serverStats";
 
 const messageUpdateIntervals = {};
 
 module.exports = {
-    updateMessageOnInterval: (messagePrefix, minutes) => {
+    updateMessageOnInterval: (messagePrefix: string, minutes: number) => {
         if (messageUpdateIntervals.hasOwnProperty(messagePrefix)) {
             err(`Already updating the message with the prefix: ${messagePrefix.replace(new RegExp('\n', 'g'), '')}`);
         }

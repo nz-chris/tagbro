@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     tagbrosHouse: 'tagbros-house',
 
     tpa: 'https://tagpro.koalabeast.com/',

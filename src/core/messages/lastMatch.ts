@@ -1,15 +1,15 @@
-const pluralize = require('pluralize');
+import pluralize from "pluralize";
 
-const constants = require('../constants');
-const {
+import constants from "../constants";
+import {
     getLatestPubId,
     getMatchData,
     getMatchDurationString,
     getMatchTimeStampString,
-    getPlayers,
-} = require('../data/tagproEu');
+    getPlayers
+} from "../data/tagproEu";
 
-exports.getMessage = async () => {
+export const getMessage = async () => {
     const matchId = await getLatestPubId();
     if (!matchId) return;
 

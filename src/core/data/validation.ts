@@ -1,9 +1,9 @@
-const { has } = require('lodash');
+import {has} from "lodash";
 
-const { err } = require('../utils/logging');
+import {err} from "../utils/logging";
 
 module.exports = {
-    validateResponseData: (response, url, expectedKeys) => {
+    validateResponseData(response: Response, url: string, expectedKeys: string[]) {
         const valid = expectedKeys.every(expectedKey => has(response?.data, expectedKey));
 
         if (!valid) {

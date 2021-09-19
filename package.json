@@ -2,14 +2,14 @@
   "name": "tag-bro",
   "version": "2.1.1",
   "description": "Helping TagPro players.",
-  "main": "./src/tagbro.js",
+  "main": "src/tagbro.ts",
   "author": "Zagd",
   "engines": {
     "node": "16.6.1",
     "npm": "7.20.5"
   },
   "scripts": {
-    "start": "node ./src/tagbro.js"
+    "start": "node src/tagbro.ts"
   },
   "dependencies": {
     "discord.js": "^13.1.0",
@@ -19,6 +19,11 @@
     "pluralize": "^8.0.0"
   },
   "devDependencies": {
-    "dotenv": "^10.0.0"
+    "@types/pluralize": "^0.0.29",
+    "@types/jsdom": "^16.2.13",
+    "@types/lodash": "^4.14.173",
+    "@types/node": "^16.9.2",
+    "dotenv": "^10.0.0",
+    "typescript": "^4.4.3"
   }
 }

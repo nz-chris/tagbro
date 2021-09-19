@@ -1,15 +1,16 @@
 const isProd = process.env.NODE_ENV === 'production';
-!isProd && require('dotenv').config();
+import { config } from "dotenv";
 
-const Discord = require('discord.js');
-const { Intents } = require('discord.js');
-const pluralize = require('pluralize');
+isProd && config();
 
-const { log, err } = require('../utils/logging');
-const { getGuildNames, getHouses } = require('../utils/guilds');
-const setUpCommands = require('../commands/setup');
+import Discord, { Intents } from 'discord.js';
+import pluralize from 'pluralize';
 
-module.exports = () => {
+import { err, log } from '../utils/logging';
+import { getGuildNames, getHouses } from '../utils/guilds';
+import setUpCommands from '../commands/setup';
+
+export default () => {
     global.isProd = isProd;
 
     global.bot = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
@@ -17,10 +18,11 @@ module.exports = () => {
     // To clear in teardown.
     global.intervals = new Set();
 
-    const teardown = e => {
+    const teardown = (e: Error) => {
         intervals.forEach(clearInterval);
         bot.destroy();
         log(`Bot destroyed due to ${e}.`);
+        process.exit(1);
     };
     ['exit', 'SIGINT', 'SIGUSR1', 'SIGUSR2', 'uncaughtException', 'SIGTERM'].forEach(e => process.on(e, teardown));
 
