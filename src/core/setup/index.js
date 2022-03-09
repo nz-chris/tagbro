@@ -12,6 +12,8 @@ const setUpCommands = require('../commands/setup');
 module.exports = () => {
     global.isProd = isProd;
 
+    global.Discord = Discord;
+
     global.bot = new Discord.Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
     // To clear in teardown.
